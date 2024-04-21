@@ -8,10 +8,16 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static const TextStyle font16GreySemiBold = TextStyle(
+  static const TextStyle font16LightGreySemiBold = TextStyle(
     fontSize: 16,
-    color: AppColors.greyColor,
+    color: AppColors.lighyGreyColor,
     fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle font18GreyRegular = TextStyle(
+    fontSize: 18,
+    color: AppColors.greyColor,
+    fontWeight: FontWeight.normal,
   );
 
   static const TextStyle font20WhiteRegular = TextStyle(
@@ -23,6 +29,18 @@ abstract class AppTextStyles {
   static const TextStyle font13WhiteSemiBold = TextStyle(
     fontSize: 13,
     color: AppColors.whiteColor,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle font14WhiteMedium = TextStyle(
+    fontSize: 14,
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const TextStyle font32PrimarySemiBold = TextStyle(
+    fontSize: 32,
+    color: AppColors.primaryColor,
     fontWeight: FontWeight.w600,
   );
 
