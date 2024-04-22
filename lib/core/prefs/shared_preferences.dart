@@ -6,7 +6,7 @@ Future<bool> get userStatus async {
   if (isFirstTime == true) {
     // Change user status
     prefs.setBool('isFirstTime',
-        true); // set to true for testing, do not forget to change it to false when done
+        false); // set to true for testing, do not forget to change it to false when done
   }
   return isFirstTime;
 }
