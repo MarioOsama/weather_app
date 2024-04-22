@@ -1,6 +1,18 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesPngsDebug
+  /// assets/images/pngs/debug.log
+  static const String imagesPngsDebug = "assets/images/pngs/debug.log";
+
+  /// Assets for imagesPngsHomeMorningBg
+  /// assets/images/pngs/home_morning_bg.png
+  static const String imagesPngsHomeMorningBg = "assets/images/pngs/home_morning_bg.png";
+
+  /// Assets for imagesPngsHouse
+  /// assets/images/pngs/house.png
+  static const String imagesPngsHouse = "assets/images/pngs/house.png";
+
   /// Assets for imagesPngsOnBoardingMoonDarkCloud
   /// assets/images/pngs/on_boarding_moon_dark_cloud.png
   static const String imagesPngsOnBoardingMoonDarkCloud = "assets/images/pngs/on_boarding_moon_dark_cloud.png";
