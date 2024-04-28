@@ -19,7 +19,7 @@ class _CustomDraggableModalBottomSheetState
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       key: _sheet,
-      initialChildSize: 0.4,
+      initialChildSize: 0.37,
       shouldCloseOnMinExtent: false,
       maxChildSize: 1,
       minChildSize: 0.37,

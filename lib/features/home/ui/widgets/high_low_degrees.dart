@@ -7,7 +7,10 @@ import 'package:weather_app/features/home/ui/widgets/super_scripts_degree_rich_t
 class HighLowDegrees extends StatelessWidget {
   const HighLowDegrees({
     super.key,
+    this.color,
   });
+
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +20,14 @@ class HighLowDegrees extends StatelessWidget {
         SuperScriptsDegreeRichText(
           text: 'H:24',
           style: AppTextStyles.font24WhiteSemiBold.copyWith(
-            color: AppColors.blueBlackColor,
+            color: color ?? AppColors.blueBlackColor,
           ),
         ),
         horizontalSpace(20),
         SuperScriptsDegreeRichText(
           text: 'L:18',
           style: AppTextStyles.font24WhiteSemiBold.copyWith(
-            color: AppColors.blueBlackColor,
+            color: color ?? AppColors.blueBlackColor,
           ),
         ),
       ],

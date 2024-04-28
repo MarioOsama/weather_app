@@ -6,7 +6,10 @@ import 'package:weather_app/features/home/ui/widgets/super_scripts_degree_rich_t
 class CurrentCityDegreeWeatherCondition extends StatelessWidget {
   const CurrentCityDegreeWeatherCondition({
     super.key,
+    this.color,
   });
+
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,17 @@ class CurrentCityDegreeWeatherCondition extends StatelessWidget {
         Text(
           'Montreal',
           style: AppTextStyles.font34WhiteRegular.copyWith(
-            color: AppColors.blueBlackColor,
+            color: color ?? AppColors.blueBlackColor,
           ),
         ),
-        const SuperScriptsDegreeRichText(text: '19'),
+        SuperScriptsDegreeRichText(
+          text: '19',
+          color: color,
+        ),
         Text(
           'Sunny',
           style: AppTextStyles.font24WhiteSemiBold.copyWith(
-            color: AppColors.blueBlackColor,
+            color: color ?? AppColors.blueBlackColor,
           ),
         ),
       ],

@@ -9,6 +9,10 @@ class Assets {
   /// assets/images/pngs/home_morning_bg.png
   static const String imagesPngsHomeMorningBg = "assets/images/pngs/home_morning_bg.png";
 
+  /// Assets for imagesPngsHomeNightBg
+  /// assets/images/pngs/home_night_bg.png
+  static const String imagesPngsHomeNightBg = "assets/images/pngs/home_night_bg.png";
+
   /// Assets for imagesPngsHouse
   /// assets/images/pngs/house.png
   static const String imagesPngsHouse = "assets/images/pngs/house.png";
