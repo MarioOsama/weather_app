@@ -8,11 +8,8 @@ class HouseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      top: 190,
-      child: Image.asset(
-        Assets.imagesPngsHouse,
-      ),
+    return Image.asset(
+      Assets.imagesPngsHouse,
     );
   }
 }
