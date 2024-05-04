@@ -20,6 +20,12 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.normal,
   );
 
+  static const TextStyle font16GreyMedium = TextStyle(
+    fontSize: 16,
+    color: AppColors.greyColor,
+    fontWeight: FontWeight.w500,
+  );
+
   static const TextStyle font20WhiteRegular = TextStyle(
     fontSize: 20,
     color: AppColors.whiteColor,
