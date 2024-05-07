@@ -19,7 +19,8 @@ class DayWeatherSummarization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color? color = isNight ? Colors.white : null;
+    final Color color =
+        isNight ? Colors.white : AppColors.secondaryGradientColorTwo;
     final bool isHidden = context.read<HomeCubit>().state is HomeHidden;
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 500),
@@ -36,7 +37,7 @@ class DayWeatherSummarization extends StatelessWidget {
     );
   }
 
-  Column _buildFullSummarization(Color? color) {
+  Column _buildFullSummarization(Color color) {
     return Column(
       children: <Widget>[
         verticalSpace(100),
@@ -44,7 +45,10 @@ class DayWeatherSummarization extends StatelessWidget {
           color: color,
         ),
         HighLowDegrees(
+          high: '24',
+          low: '18',
           color: color,
+          center: true,
         )
       ],
     );

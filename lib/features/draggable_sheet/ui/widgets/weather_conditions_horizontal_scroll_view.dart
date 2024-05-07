@@ -11,7 +11,7 @@ class WeatherConditionsHorizontalScrollView extends StatelessWidget {
     return const SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: EdgeInsets.only(left: 20.0, bottom: 20.0),
+        padding: EdgeInsets.only(left: 20.0, bottom: 15.0, top: 15.0),
         child: WeatherConditionItemsRow(),
       ),
     );

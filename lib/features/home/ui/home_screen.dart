@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/di/dependency_injection.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
@@ -29,10 +30,15 @@ class HomeScreen extends StatelessWidget {
                 BackgroundImage(
                   isNight: isNight,
                 ),
+              if (!isHidden)
+                Positioned(
+                  width: MediaQuery.sizeOf(context).width * 1.05,
+                  bottom: MediaQuery.sizeOf(context).height * 0.15,
+                  child: const HouseItem(),
+                ),
               DayWeatherSummarization(
                 isNight: isNight,
               ),
-              const HouseItem(),
               BlocProvider<SheetCubit>(
                 create: (context) => getIt<SheetCubit>(),
                 child: const DraggableSheet(),

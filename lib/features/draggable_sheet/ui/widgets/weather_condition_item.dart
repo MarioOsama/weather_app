@@ -60,7 +60,7 @@ class WeatherConditionItem extends StatelessWidget {
           color: AppColors.blueBlackColor.withOpacity(0.25),
           blurRadius: 15,
           spreadRadius: 3,
-          offset: const Offset(4, 3),
+          offset: const Offset(1, 1),
         )
       ],
       borderRadius: BorderRadius.circular(30),

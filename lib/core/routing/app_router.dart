@@ -7,6 +7,7 @@ import 'package:weather_app/features/home/logic/cubit/home_state.dart';
 import 'package:weather_app/features/home/ui/home_screen.dart';
 import 'package:weather_app/features/on_boarding/cubit/on_boarding_cubit.dart';
 import 'package:weather_app/features/on_boarding/ui/on_boarding_screen.dart';
+import 'package:weather_app/features/search/ui/search_screen.dart';
 
 class AppRouter {
   final bool isFirstTime;
@@ -29,6 +30,10 @@ class AppRouter {
             create: (context) => getIt<HomeCubit>(),
             child: const HomeScreen(),
           ),
+        );
+      case AppRoutes.search:
+        return MaterialPageRoute(
+          builder: (_) => const SearchScreen(),
         );
       default:
         return MaterialPageRoute(

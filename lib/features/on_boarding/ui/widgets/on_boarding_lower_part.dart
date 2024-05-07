@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/features/on_boarding/ui/on_boarding_lower_part_button.dart';
-import 'package:weather_app/features/on_boarding/ui/on_boarding_lower_part_texts.dart';
+import 'package:weather_app/features/on_boarding/ui/widgets/on_boarding_lower_part_button.dart';
+import 'package:weather_app/features/on_boarding/ui/widgets/on_boarding_lower_part_texts.dart';
 
 class OnBoardingLowerPart extends StatelessWidget {
   const OnBoardingLowerPart({
