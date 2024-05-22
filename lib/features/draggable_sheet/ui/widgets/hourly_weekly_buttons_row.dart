@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/core/theming/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/features/draggable_sheet/ui/widgets/sheet_header_action_button.dart';
+import 'package:weather_app/features/home/logic/cubit/home_cubit.dart';
+import 'package:weather_app/features/home/logic/cubit/home_state.dart';
 
 class HourlyWeeklyButtonsRow extends StatelessWidget {
   const HourlyWeeklyButtonsRow({
@@ -8,24 +11,28 @@ class HourlyWeeklyButtonsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () {},
-          child: const Text(
-            'Hourly Forecast',
-            style: AppTextStyles.font16GreyMedium,
-          ),
-        ),
-        const Spacer(),
-        GestureDetector(
-          onTap: () {},
-          child: const Text(
-            'Weekly Forecast',
-            style: AppTextStyles.font16GreyMedium,
-          ),
-        ),
-      ],
+    return BlocSelector<HomeCubit, HomeState, bool>(
+      selector: (state) {
+        if (state is HomeInitial) {
+          return state.isHourlyForecast;
+        }
+        return true;
+      },
+      builder: (context, isHourlyForecast) {
+        return Row(
+          children: <Widget>[
+            SheetHeaderActionButton(
+              title: 'Hourly Forecast',
+              isSelected: isHourlyForecast,
+            ),
+            const Spacer(),
+            SheetHeaderActionButton(
+              title: 'Weekly Forecast',
+              isSelected: !isHourlyForecast,
+            ),
+          ],
+        );
+      },
     );
   }
 }

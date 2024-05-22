@@ -1,9 +1,12 @@
 abstract class HomeState {
   const HomeState();
+
+  // final bool? isHourlyForecast;
 }
 
 class HomeInitial extends HomeState {
-  const HomeInitial();
+  final bool isHourlyForecast;
+  const HomeInitial(this.isHourlyForecast);
 }
 
 class HomeLoading extends HomeState {
@@ -28,7 +31,9 @@ class HomeLoading extends HomeState {
 // }
 
 class HomeError extends HomeState {
-  const HomeError(this.message);
+  const HomeError(
+    this.message,
+  );
 
   final String message;
 }

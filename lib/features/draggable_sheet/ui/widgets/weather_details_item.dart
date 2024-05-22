@@ -27,14 +27,7 @@ class WeatherDetailsItem extends StatelessWidget {
           duration: const Duration(milliseconds: 100),
           scale: size + 0.17,
           child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.5),
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(
-                color: AppColors.lightPurpleColor,
-                width: 1,
-              ),
-            ),
+            decoration: _buildDecoration(),
             padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,6 +69,17 @@ class WeatherDetailsItem extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  BoxDecoration _buildDecoration() {
+    return BoxDecoration(
+      color: AppColors.primaryColor.withOpacity(0.5),
+      borderRadius: BorderRadius.circular(22),
+      border: Border.all(
+        color: AppColors.lightPurpleColor,
+        width: 1,
+      ),
     );
   }
 }
