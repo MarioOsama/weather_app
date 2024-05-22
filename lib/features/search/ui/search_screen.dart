@@ -14,16 +14,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppColors.primaryColor,
-            AppColors.secondaryColor,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      decoration: _buildDecoration(),
       child: Column(
         children: <Widget>[
           const CustomAppBar(title: 'Search'),
@@ -41,5 +32,18 @@ class SearchScreen extends StatelessWidget {
         ],
       ),
     ));
+  }
+
+  BoxDecoration _buildDecoration() {
+    return const BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          AppColors.primaryColor,
+          AppColors.secondaryColor,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+    );
   }
 }

@@ -84,4 +84,10 @@ class _SearchResultCardState extends State<SearchResultCard>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }

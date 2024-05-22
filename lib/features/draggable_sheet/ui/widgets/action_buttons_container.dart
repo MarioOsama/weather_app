@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
-import 'package:weather_app/features/draggable_sheet/ui/widgets/action_buttons_row.dart';
 import 'package:weather_app/features/draggable_sheet/ui/widgets/curved_clipper.dart';
 
 class ActionButtonsContainer extends StatelessWidget {
@@ -19,7 +18,6 @@ class ActionButtonsContainer extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.primaryGradientColorOne.withOpacity(0.25),
         ),
-        child: const ActionButtonsRow(),
       ),
     );
   }

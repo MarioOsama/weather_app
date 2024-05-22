@@ -24,7 +24,7 @@ class DraggableSheetBody extends StatelessWidget {
             verticalSpace(15),
             const WeatherConditionsHorizontalScrollView(),
             AnimatedCrossFade(
-                firstChild: _buildActions(),
+                firstChild: _buildBlankContainer(),
                 secondChild: _buildActionsOrFullDetails(context),
                 crossFadeState: isExpanded
                     ? CrossFadeState.showSecond
@@ -43,7 +43,7 @@ class DraggableSheetBody extends StatelessWidget {
     );
   }
 
-  Transform _buildActions() {
+  Transform _buildBlankContainer() {
     return Transform.rotate(
       angle: 180 * 3.1415927 / 180,
       child: const ActionButtonsContainer(),
