@@ -1,13 +1,13 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/core/helpers/spacing.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
+import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 import 'package:weather_app/features/home/logic/cubit/home_cubit.dart';
 import 'package:weather_app/features/home/logic/cubit/home_state.dart';
-import 'package:weather_app/features/home/ui/widgets/high_low_degrees.dart';
-
-import 'current_city_degree_weather_condition.dart';
+import 'package:weather_app/features/home/ui/widgets/full_weather_summarization.dart';
+import 'package:weather_app/features/home/ui/widgets/short_weather_summarization.dart';
 
 class DayWeatherSummarization extends StatelessWidget {
   const DayWeatherSummarization({
@@ -21,56 +21,59 @@ class DayWeatherSummarization extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color =
         isNight ? Colors.white : AppColors.secondaryGradientColorTwo;
-    final bool isHidden = context.read<HomeCubit>().state is HomeHidden;
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 500),
-      transitionBuilder: (child, animation) {
-        return SizeTransition(
-          axisAlignment: 0.75,
-          sizeFactor: animation,
-          child: child,
+    final bool isHidden = context.read<HomeCubit>().state.isHomeSheetExpanded;
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) =>
+          current is HomeLoaded || current is HomeError,
+      builder: (context, state) {
+        if (state is HomeError) {
+          log(state.message);
+          return Center(
+            child: Text(
+              state.message,
+              style: AppTextStyles.font16WhiteRegular,
+            ),
+          );
+        }
+
+        final CurrentWeatherResponseBody weather =
+            (state as HomeLoaded).currentWeather;
+
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (child, animation) {
+            return SizeTransition(
+              axisAlignment: 0.75,
+              sizeFactor: animation,
+              child: child,
+            );
+          },
+          child: isHidden
+              ? _buildShortSummarization(weather)
+              : _buildFullSummarization(color, weather),
         );
       },
-      child: isHidden
-          ? _buildShortSummarization()
-          : _buildFullSummarization(color),
     );
   }
 
-  Column _buildFullSummarization(Color color) {
-    return Column(
-      children: <Widget>[
-        verticalSpace(100),
-        CurrentCityDegreeWeatherCondition(
-          color: color,
-        ),
-        HighLowDegrees(
-          high: '24',
-          low: '18',
-          color: color,
-          center: true,
-        )
-      ],
-    );
-  }
-
-  Center _buildShortSummarization() {
+  Center _buildFullSummarization(
+      Color color, CurrentWeatherResponseBody weather) {
     return Center(
-      child: Column(
-        children: [
-          verticalSpace(50),
-          const Text(
-            'Montreal',
-            style: AppTextStyles.font34WhiteRegular,
-          ),
-          Text(
-            '19° | Cloudy',
-            style: AppTextStyles.font20WhiteSemiBold.copyWith(
-              color: AppColors.greyColor,
-            ),
-          ),
-        ],
+      key: const ValueKey('full_summarization'),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 100.0),
+        child: FullWeatherSummarization(
+          color: color,
+          weather: weather,
+        ),
       ),
+    );
+  }
+
+  Center _buildShortSummarization(CurrentWeatherResponseBody weather) {
+    return Center(
+      key: const ValueKey('short_summarization'),
+      child: ShortWeatherSummarization(weather: weather),
     );
   }
 }

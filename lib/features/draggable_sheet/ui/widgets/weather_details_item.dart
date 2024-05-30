@@ -13,10 +13,12 @@ class WeatherDetailsItem extends StatelessWidget {
     super.key,
     this.subtitleStyle,
     required this.weatherDetailsItemModel,
+    this.barGradientColors,
   });
 
   final WeatherDetailsItemModel weatherDetailsItemModel;
   final TextStyle? subtitleStyle;
+  final List<Color>? barGradientColors;
 
   @override
   Widget build(BuildContext context) {
@@ -46,23 +48,24 @@ class WeatherDetailsItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                verticalSpace(10),
+                verticalSpace(20),
                 Text(
                   weatherDetailsItemModel.subtitle,
                   style: subtitleStyle ?? AppTextStyles.font24WhiteSemiBold,
                 ),
-                verticalSpace(20),
+                verticalSpace(10),
                 if (weatherDetailsItemModel.barPercentage != null)
                   PercentageBar(
                     percentage: weatherDetailsItemModel.barPercentage!,
+                    gradientColors: barGradientColors,
                   ),
                 if (weatherDetailsItemModel.barPercentage != null &&
                     weatherDetailsItemModel.footerText != null)
-                  verticalSpace(20),
+                  verticalSpace(10),
                 if (weatherDetailsItemModel.footerText != null)
                   Text(
                     weatherDetailsItemModel.footerText!,
-                    style: AppTextStyles.font16GreyMedium,
+                    style: AppTextStyles.font14WhiteMedium,
                   ),
               ],
             ),

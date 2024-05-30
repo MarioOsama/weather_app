@@ -20,3 +20,21 @@ extension Navigation on BuildContext {
     return Navigator.of(this).pop();
   }
 }
+
+extension ToTitleCase on String {
+  String toTitleCase() {
+    final List<String> words = this.split(' ');
+    final List<String> capitalizedWords = [];
+    for (final String word in words) {
+      capitalizedWords.add(word[0].toUpperCase() + word.substring(1));
+    }
+    return capitalizedWords.join(' ');
+  }
+}
+
+extension ToList on String {
+  String getFirst(String separator, int numberOfWords) {
+    final List<String> words = this.split(separator);
+    return words.sublist(0, numberOfWords).join(separator);
+  }
+}

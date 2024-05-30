@@ -6,9 +6,11 @@ class PercentageBar extends StatelessWidget {
   const PercentageBar({
     super.key,
     required this.percentage,
+    this.gradientColors,
   });
 
   final double percentage;
+  final List<Color>? gradientColors;
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,12 @@ class PercentageBar extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        gradient: const LinearGradient(
-          colors: [
-            AppColors.blueColor,
-            AppColors.pinkColor,
-          ],
+        gradient: LinearGradient(
+          colors: gradientColors ??
+              [
+                AppColors.blueColor,
+                AppColors.pinkColor,
+              ],
         ),
       ),
       child: LayoutBuilder(builder: (context, constraints) {

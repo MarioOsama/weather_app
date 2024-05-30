@@ -13,21 +13,18 @@ class HourlyWeeklyButtonsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocSelector<HomeCubit, HomeState, bool>(
       selector: (state) {
-        if (state is HomeInitial) {
-          return state.isHourlyForecast;
-        }
-        return true;
+        return state.isHourlyForecast;
       },
       builder: (context, isHourlyForecast) {
         return Row(
           children: <Widget>[
             SheetHeaderActionButton(
-              title: 'Hourly Forecast',
+              title: 'Hourly',
               isSelected: isHourlyForecast,
             ),
             const Spacer(),
             SheetHeaderActionButton(
-              title: 'Weekly Forecast',
+              title: 'Weekly',
               isSelected: !isHourlyForecast,
             ),
           ],

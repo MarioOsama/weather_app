@@ -22,7 +22,7 @@ class SheetHeader extends StatelessWidget {
             verticalSpace(10),
             AnimatedOpacity(
               duration: const Duration(milliseconds: 200),
-              opacity: state is HomeHidden ? 0.0 : 1.0,
+              opacity: state.isHomeSheetExpanded ? 0.0 : 1.0,
               child: const SheetHeaderButtonsContainer(),
             ),
           ],
