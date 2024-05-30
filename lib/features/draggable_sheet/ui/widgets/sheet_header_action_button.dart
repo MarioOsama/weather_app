@@ -17,7 +17,8 @@ class SheetHeaderActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<HomeCubit>().loading(title);
+        if (isSelected) return;
+        context.read<HomeCubit>().toggleForecastType(title);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
@@ -32,7 +33,7 @@ class SheetHeaderActionButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          title,
+          '$title Forecast',
           style: AppTextStyles.font16GreyMedium,
         ),
       ),

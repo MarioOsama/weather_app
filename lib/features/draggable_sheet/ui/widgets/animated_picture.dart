@@ -35,4 +35,10 @@ class _AnimatedPictureState extends State<AnimatedPicture>
           assetName: widget.assetName,
         ));
   }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 }

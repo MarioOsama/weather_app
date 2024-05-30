@@ -50,6 +50,12 @@ abstract class AppTextStyles {
     fontWeight: FontWeight.w600,
   );
 
+  static const TextStyle font28WhiteRegular = TextStyle(
+    fontSize: 28,
+    color: AppColors.whiteColor,
+    fontWeight: FontWeight.w400,
+  );
+
   static const TextStyle font13WhiteSemiBold = TextStyle(
     fontSize: 13,
     color: AppColors.whiteColor,
