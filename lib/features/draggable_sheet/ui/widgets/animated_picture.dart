@@ -31,8 +31,8 @@ class _AnimatedPictureState extends State<AnimatedPicture>
     return FadeTransition(
         opacity:
             Tween<double>(begin: 0.25, end: 1).animate(animationController),
-        child: SvgAssetImage(
-          assetName: widget.assetName,
+        child: Image.asset(
+          widget.assetName,
         ));
   }
 

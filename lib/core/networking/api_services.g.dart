@@ -22,7 +22,7 @@ class _ApiServices implements ApiServices {
 
   @override
   Future<CurrentWeatherResponseBody> getCurrentWeatherData(
-      CurrentWeatherRequestBody currentWeatherRequestBody) async {
+      WeatherRequestBody currentWeatherRequestBody) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.addAll(currentWeatherRequestBody.toJson());
@@ -46,6 +46,35 @@ class _ApiServices implements ApiServices {
               baseUrl,
             ))));
     final value = CurrentWeatherResponseBody.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ForecastWeatherResponseBody> getForecastedWeatherData(
+      WeatherRequestBody currentWeatherRequestBody) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(currentWeatherRequestBody.toJson());
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ForecastWeatherResponseBody>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'forecast',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ForecastWeatherResponseBody.fromJson(_result.data!);
     return value;
   }
 

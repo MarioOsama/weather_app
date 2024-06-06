@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/networking/api_constant.dart';
-import 'package:weather_app/features/home/data/models/current_weather_request_body.dart';
+import 'package:weather_app/features/home/data/models/forecast_weather_response_body.dart';
+import 'package:weather_app/features/home/data/models/weather_request_body.dart';
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 import 'package:weather_app/features/home/data/repos/home_repo.dart';
 import 'package:weather_app/features/home/logic/cubit/home_state.dart';
@@ -22,8 +21,12 @@ class HomeCubit extends Cubit<HomeState> {
     } else if (state is HomeLoaded) {
       final CurrentWeatherResponseBody weather =
           (state as HomeLoaded).currentWeather;
-
-      emit(HomeLoaded(weather, isHomeSheetExpanded: true));
+      final ForecastWeatherResponseBody weeklyWeather =
+          (state as HomeLoaded).weeklyForecast;
+      final ForecastWeatherResponseBody forecastedWeather =
+          (state as HomeLoaded).forecastWeather;
+      emit(HomeLoaded(weather, weeklyWeather, forecastedWeather,
+          isHomeSheetExpanded: true));
     } else if (state is HomeError) {
       final String error = (state as HomeError).message;
       emit(HomeError(error, isHomeSheetExpanded: true));
@@ -40,7 +43,13 @@ class HomeCubit extends Cubit<HomeState> {
     } else if (state is HomeLoaded) {
       final CurrentWeatherResponseBody weather =
           (state as HomeLoaded).currentWeather;
-      emit(HomeLoaded(weather, isHomeSheetExpanded: false));
+      final ForecastWeatherResponseBody weeklyWeather =
+          (state as HomeLoaded).weeklyForecast;
+
+      final ForecastWeatherResponseBody forecastedWeather =
+          (state as HomeLoaded).forecastWeather;
+      emit(HomeLoaded(weather, weeklyWeather, forecastedWeather,
+          isHomeSheetExpanded: false));
     } else if (state is HomeError) {
       final String error = (state as HomeError).message;
       emit(HomeError(error, isHomeSheetExpanded: false));
@@ -48,7 +57,11 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void toggleForecastType(String forecastType) {
-    loadWeatherData(forecastType);
+    if (forecastType == 'Hourly') {
+      changeToHourlyForecast();
+    } else {
+      changeToWeeklyForecast();
+    }
   }
 
   void loadWeatherData(String forecastType) async {
@@ -57,17 +70,42 @@ class HomeCubit extends Cubit<HomeState> {
     Position currentLocation = await _homeRepo.getCurrentLocation();
     final currentPosLon = currentLocation.longitude;
     final currentPosLat = currentLocation.latitude;
-    log('Current Location Longitude: $currentPosLon');
-    log('Current Location latitude: $currentPosLat');
-    CurrentWeatherResponseBody weatherData = await _homeRepo.getWeatherData(
-      CurrentWeatherRequestBody(
-        lon: currentPosLon,
-        lat: currentPosLat,
-        apiKey: ApiConstants.apiKey,
-        units: 'metric',
-      ),
+
+    final WeatherRequestBody request = WeatherRequestBody(
+      lon: currentPosLon,
+      lat: currentPosLat,
+      apiKey: ApiConstants.apiKey,
+      units: 'metric',
     );
-    emit(HomeLoaded(isHourlyForecast: isHourlyForecast, weatherData));
+
+    final CurrentWeatherResponseBody weatherData =
+        await _homeRepo.getWeatherData(
+      request,
+    );
+
+    final ForecastWeatherResponseBody forecastedWeatherData =
+        await _homeRepo.getForecastData(
+      request,
+    );
+
+    final ForecastWeatherResponseBody weeklyResponseBody =
+        ForecastWeatherResponseBody(
+            weatherList: getWeeklyForecast(forecastedWeatherData));
+
+    emit(HomeLoaded(
+      isHourlyForecast: isHourlyForecast,
+      weatherData,
+      weeklyResponseBody,
+      forecastedWeatherData,
+    ));
+  }
+
+  void changeToWeeklyForecast() {
+    emit((state as HomeLoaded).copyWith(isHourlyForecast: false));
+  }
+
+  void changeToHourlyForecast() {
+    emit((state as HomeLoaded).copyWith(isHourlyForecast: true));
   }
 
   bool _getForecastType(String forecastType) {
@@ -75,5 +113,37 @@ class HomeCubit extends Cubit<HomeState> {
       return false;
     }
     return true;
+  }
+
+  List<Map<String, List>> getWeeklyForecast(
+      ForecastWeatherResponseBody forecastWeather) {
+    final List<Map> weatherList = forecastWeather.weatherList;
+    final List<Map<String, List>> weeklyForecast = [];
+
+    for (var element in weatherList) {
+      final elementDate = element.keys.first.toString().split(' ')[0];
+      // To avoid adding today's date to the weekly forecast
+      if (elementDate == DateTime.now().toString().split(' ')[0]) {
+        continue;
+      }
+      if (weeklyForecast.isEmpty) {
+        weeklyForecast.add({
+          elementDate: [element.values.first['temp']]
+        });
+      } else {
+        if (weeklyForecast.last.keys.first == elementDate) {
+          weeklyForecast.last[elementDate]!.add(element.values.first['temp']);
+        } else {
+          // Sort the temp list of before date before adding new date
+          weeklyForecast.last[weeklyForecast.last.keys.first]!.sort();
+          // Add new date with temp list
+          weeklyForecast.add({
+            elementDate: [element.values.first['temp']]
+          });
+        }
+      }
+    }
+
+    return weeklyForecast;
   }
 }

@@ -14,7 +14,7 @@ class ActionButtonsContainer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
         width: double.infinity,
-        height: 80,
+        height: 50,
         decoration: BoxDecoration(
           color: AppColors.primaryGradientColorOne.withOpacity(0.25),
         ),
