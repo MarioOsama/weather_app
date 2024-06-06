@@ -9,7 +9,7 @@ void main() async {
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   setupGetIt();
 
-  bool isFirstTime = await userStatus;
+  bool isFirstTime = await isNewUser;
   AppRouter appRouter = AppRouter(isFirstTime: isFirstTime);
   runApp(
     WeatherForcastApp(

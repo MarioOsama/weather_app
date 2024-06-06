@@ -16,8 +16,6 @@ class WeatherDetailsColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // log(unixToTime(1717001410));
-    // log(getSunriseSunsetPercentage(1716951303, 1717001410).toString());
     final currentWeather =
         (context.read<HomeCubit>().state as HomeLoaded).currentWeather;
     final weatherDetailsModels = getWeatherDetailsModelList(currentWeather);
@@ -70,9 +68,11 @@ List<WeatherDetailsItemModel> getWeatherDetailsModelList(
     WeatherDetailsItemModel(
       icon: Icons.thermostat_outlined,
       title: 'FEEELS LIKE',
-      subtitle: currentWeather.feelsLike.toInt().toString(),
-      footerText: (currentWeather.temp - currentWeather.feelsLike).round() > 0
-          ? 'The difference is ${(currentWeather.temp - currentWeather.feelsLike).round()}°C'
+      subtitle: currentWeather.feelsLike.round().toString(),
+      footerText: (currentWeather.temp.round() -
+                  currentWeather.feelsLike.round()) >
+              0
+          ? 'The difference is ${currentWeather.temp.round() - currentWeather.feelsLike.round()}°C'
           : 'Similar to the actual temperature',
     ),
     WeatherDetailsItemModel(

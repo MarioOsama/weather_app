@@ -1,6 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/networking/api_services.dart';
-import 'package:weather_app/features/home/data/models/current_weather_request_body.dart';
+import 'package:weather_app/features/home/data/models/forecast_weather_response_body.dart';
+import 'package:weather_app/features/home/data/models/weather_request_body.dart';
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 
 class HomeRepo {
@@ -9,10 +10,17 @@ class HomeRepo {
   const HomeRepo(this._apiServices);
 
   Future<CurrentWeatherResponseBody> getWeatherData(
-      CurrentWeatherRequestBody currentWeatherRequestBody) async {
+      WeatherRequestBody currentWeatherRequestBody) async {
     final CurrentWeatherResponseBody weatherData =
         await _apiServices.getCurrentWeatherData(currentWeatherRequestBody);
     return weatherData;
+  }
+
+  Future<ForecastWeatherResponseBody> getForecastData(
+      WeatherRequestBody currentWeatherRequestBody) async {
+    final ForecastWeatherResponseBody forecastData =
+        await _apiServices.getForecastedWeatherData(currentWeatherRequestBody);
+    return forecastData;
   }
 
   Future<Position> getCurrentLocation() async {

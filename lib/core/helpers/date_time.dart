@@ -13,6 +13,11 @@ double getSunriseSunsetPercentage(int sunrise, int sunset) {
           .add(const Duration(hours: 1));
   final DateTime sunsetDate = DateTime.fromMillisecondsSinceEpoch(sunset * 1000)
       .add(const Duration(hours: 1));
+  // Return 1 if the current time is after sunset
+  if (now.isAfter(sunsetDate)) {
+    return 1;
+  }
+  // Return percentage if the current time is before sunset
   final int totalMinutes = sunsetDate.difference(sunriseDate).inMinutes;
   final int passedMinutes = now.difference(sunriseDate).inMinutes;
   return passedMinutes / totalMinutes;
