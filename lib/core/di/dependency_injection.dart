@@ -5,6 +5,8 @@ import 'package:weather_app/features/draggable_sheet/logic/cubit/sheet_cubit.dar
 import 'package:weather_app/features/home/data/repos/home_repo.dart';
 import 'package:weather_app/features/home/logic/cubit/home_cubit.dart';
 import 'package:weather_app/features/on_boarding/cubit/on_boarding_cubit.dart';
+import 'package:weather_app/features/search/data/repos/search_repo.dart';
+import 'package:weather_app/features/search/logic/cubit/search_cubit.dart';
 
 import '../networking/dio_factory.dart';
 
@@ -19,7 +21,9 @@ void setupGetIt() {
   getIt.registerFactory<OnBoardingCubit>(() => OnBoardingCubit());
   getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
   getIt.registerFactory<SheetCubit>(() => SheetCubit());
+  getIt.registerFactory<SearchCubit>(() => SearchCubit(getIt()));
 
   // Repos
   getIt.registerLazySingleton<HomeRepo>(() => HomeRepo(getIt()));
+  getIt.registerLazySingleton<SearchRepo>(() => SearchRepo(getIt()));
 }

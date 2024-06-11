@@ -11,9 +11,16 @@ class WeatherConditionItem extends StatelessWidget {
 
   final WeatherConditionItemModel weatherConditionItemModel;
 
+  getHour(bool isNightHour) {
+    if (weatherConditionItemModel.dateTime.hour % 12 == 0 && isNightHour) {
+      return 12;
+    }
+    return weatherConditionItemModel.dateTime.hour % 12;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final bool isNight = weatherConditionItemModel.dateTime.hour > 11 &&
+    final bool isNightHour = weatherConditionItemModel.dateTime.hour > 11 &&
         weatherConditionItemModel.dateTime.minute < 59;
 
     return Container(
@@ -25,7 +32,7 @@ class WeatherConditionItem extends StatelessWidget {
         children: [
           FittedBox(
             child: Text(
-              '${weatherConditionItemModel.dateTime.hour - 12} ${isNight ? 'PM' : 'AM'}',
+              '${getHour(isNightHour)} ${isNightHour ? 'PM' : 'AM'}',
               style: AppTextStyles.font15WhiteSemiBold,
             ),
           ),

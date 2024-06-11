@@ -15,6 +15,7 @@ class CurrentWeatherResponseBody {
     required this.sunrise,
     required this.sunset,
     required this.feelsLike,
+    required this.country,
   });
 
   @JsonKey(name: 'name')
@@ -37,6 +38,8 @@ class CurrentWeatherResponseBody {
   final int sunset;
   @JsonKey(fromJson: _feelsLikeFromJson)
   final double feelsLike;
+  @JsonKey(fromJson: _countryFromJson)
+  final String country;
 
   static double _tempFromJson(dynamic json) {
     return (json['main']['temp'] as num).toDouble();
@@ -72,6 +75,10 @@ class CurrentWeatherResponseBody {
 
   static double _feelsLikeFromJson(dynamic json) {
     return (json['main']['feels_like'] as num).toDouble();
+  }
+
+  static String _countryFromJson(dynamic json) {
+    return (json['sys']['country'] as String);
   }
 
   factory CurrentWeatherResponseBody.fromJson(Map<String, dynamic> json) =>

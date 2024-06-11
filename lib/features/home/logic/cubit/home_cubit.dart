@@ -6,6 +6,7 @@ import 'package:weather_app/features/home/data/models/weather_request_body.dart'
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 import 'package:weather_app/features/home/data/repos/home_repo.dart';
 import 'package:weather_app/features/home/logic/cubit/home_state.dart';
+import 'package:weather_app/features/search/data/models/city_weather_request_body.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepo _homeRepo;
@@ -66,7 +67,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   void loadWeatherData(String forecastType) async {
     final bool isHourlyForecast = _getForecastType(forecastType);
-    emit(HomeLoading(isHourlyForecast: isHourlyForecast));
+    // emit(HomeLoading(isHourlyForecast: isHourlyForecast));
+    emit(const HomeLoading());
     Position currentLocation = await _homeRepo.getCurrentLocation();
     final currentPosLon = currentLocation.longitude;
     final currentPosLat = currentLocation.latitude;
@@ -94,6 +96,36 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(HomeLoaded(
       isHourlyForecast: isHourlyForecast,
+      weatherData,
+      weeklyResponseBody,
+      forecastedWeatherData,
+    ));
+  }
+
+  void loadWeatherDataByCityName(String cityName) async {
+    emit(const HomeLoading());
+    final CityWeatherRequestBody request = CityWeatherRequestBody(
+      cityName: cityName,
+      apiKey: ApiConstants.apiKey,
+      units: 'metric',
+    );
+
+    final CurrentWeatherResponseBody weatherData =
+        await _homeRepo.getCurrentWeatherDataByCityName(
+      request,
+    );
+
+    final ForecastWeatherResponseBody forecastedWeatherData =
+        await _homeRepo.getForecastDataByCityName(
+      request,
+    );
+
+    final ForecastWeatherResponseBody weeklyResponseBody =
+        ForecastWeatherResponseBody(
+            weatherList: getWeeklyForecast(forecastedWeatherData));
+
+    emit(HomeLoaded(
+      isHourlyForecast: true,
       weatherData,
       weeklyResponseBody,
       forecastedWeatherData,

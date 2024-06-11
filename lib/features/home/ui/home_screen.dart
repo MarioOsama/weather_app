@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
         if (!isHidden)
           Positioned(
             width: MediaQuery.sizeOf(context).width * 1.05,
-            bottom: MediaQuery.sizeOf(context).height * 0.15,
+            bottom: MediaQuery.sizeOf(context).height * 0.095,
             child: const HouseItem(),
           ),
         Positioned(

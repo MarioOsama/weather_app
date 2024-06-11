@@ -11,20 +11,20 @@ class WeatherConditionItemModel {
     required this.temp,
   });
 
-  static setWeatherIcon(String weather) {
-    switch (weather) {
-      case 'Clear':
-        return Assets.imagesPngsSun;
-      case 'Clouds':
-        return Assets.imagesPngsClouds;
-      case 'Rain':
-        return Assets.imagesPngsRainyCloud;
-      case 'Snow':
-        return Assets.imagesPngsSnow;
-      case 'Thunderstorm':
-        return Assets.imagesPngsThunder;
-      default:
-        return Assets.imagesPngsSun;
+  static setWeatherIcon(String weatherDescription) {
+    final String weather = weatherDescription.toLowerCase();
+    if (weather.contains('clear')) {
+      return Assets.imagesPngsSun;
+    } else if (weather.contains('clouds')) {
+      return Assets.imagesPngsClouds;
+    } else if (weather.contains('rain')) {
+      return Assets.imagesPngsRainyCloud;
+    } else if (weather.contains('snow')) {
+      return Assets.imagesPngsSnow;
+    } else if (weather.contains('thunderstorm')) {
+      return Assets.imagesPngsThunder;
+    } else {
+      return Assets.imagesPngsSun;
     }
   }
 }

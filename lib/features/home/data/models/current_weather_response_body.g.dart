@@ -20,6 +20,7 @@ CurrentWeatherResponseBody _$CurrentWeatherResponseBodyFromJson(
       sunrise: CurrentWeatherResponseBody._sunriseFromJson(json),
       sunset: CurrentWeatherResponseBody._sunsetFromJson(json),
       feelsLike: CurrentWeatherResponseBody._feelsLikeFromJson(json),
+      country: CurrentWeatherResponseBody._countryFromJson(json),
     );
 
 Map<String, dynamic> _$CurrentWeatherResponseBodyToJson(
@@ -35,4 +36,5 @@ Map<String, dynamic> _$CurrentWeatherResponseBodyToJson(
       'sunrise': instance.sunrise,
       'sunset': instance.sunset,
       'feelsLike': instance.feelsLike,
+      'country': instance.country,
     };

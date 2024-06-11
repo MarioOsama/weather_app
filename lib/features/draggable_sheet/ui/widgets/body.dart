@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/helpers/spacing.dart';
 import 'package:weather_app/features/draggable_sheet/logic/cubit/sheet_cubit.dart';
 import 'package:weather_app/features/draggable_sheet/logic/cubit/sheet_state.dart';
-import 'package:weather_app/features/draggable_sheet/ui/widgets/action_buttons_container.dart';
 import 'package:weather_app/features/draggable_sheet/ui/widgets/sheet_header.dart';
 import 'package:weather_app/features/draggable_sheet/ui/widgets/weather_conditions_horizontal_scroll_view.dart';
 import 'package:weather_app/features/draggable_sheet/ui/widgets/weather_details_column.dart';
@@ -24,7 +23,7 @@ class DraggableSheetBody extends StatelessWidget {
             verticalSpace(15),
             const WeatherConditionsHorizontalScrollView(),
             AnimatedCrossFade(
-                firstChild: _buildBlankContainer(),
+                firstChild: const SizedBox.shrink(),
                 secondChild: _buildActionsOrFullDetails(context),
                 crossFadeState: isExpanded
                     ? CrossFadeState.showSecond
@@ -40,13 +39,6 @@ class DraggableSheetBody extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(20.0),
       child: WeatherDetailsColumn(),
-    );
-  }
-
-  Transform _buildBlankContainer() {
-    return Transform.rotate(
-      angle: 180 * 3.1415927 / 180,
-      child: const ActionButtonsContainer(),
     );
   }
 }
