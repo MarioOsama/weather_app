@@ -16,10 +16,11 @@ class FullWeatherSummarization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cityName = getCityName(weather);
     return Column(
       children: [
         Text(
-          weather.cityName.getFirst(' ', 3),
+          cityName,
           style: AppTextStyles.font34WhiteRegular.copyWith(
             color: color,
           ),
@@ -33,11 +34,6 @@ class FullWeatherSummarization extends StatelessWidget {
             ),
           ),
         ),
-        // verticalSpace(20),
-        // SuperScriptsDegreeRichText(
-        //   text: weather.temp.round().toString(),
-        //   color: color,
-        // ),
         Text(
           weather.weatherDescription.toTitleCase(),
           style: AppTextStyles.font24WhiteSemiBold.copyWith(
@@ -46,5 +42,15 @@ class FullWeatherSummarization extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String getCityName(CurrentWeatherResponseBody weather) {
+    if (weather.cityName.contains(',') ||
+        weather.cityName.split(' ').length > 3) {
+      final cityName = weather.cityName.getFirst(' ', 3);
+      return cityName;
+    } else {
+      return weather.cityName;
+    }
   }
 }

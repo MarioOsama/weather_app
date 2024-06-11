@@ -41,13 +41,13 @@ class _DraggableSheet extends State<DraggableSheet> {
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
       key: _sheet,
-      initialChildSize: 0.37,
+      initialChildSize: 0.3,
       shouldCloseOnMinExtent: false,
       maxChildSize: 0.83,
-      minChildSize: 0.37,
+      minChildSize: 0.3,
       expand: true,
       snap: true,
-      snapSizes: const [0.37],
+      snapSizes: const [0.3],
       controller: _controller,
       builder: (BuildContext context, ScrollController scrollController) {
         return _buildSheet(scrollController);

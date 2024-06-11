@@ -14,7 +14,7 @@ class CircularIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: parentWidth * percentage - 6,
+      left: parentWidth * percentage + 10,
       top: 0,
       bottom: 0,
       child: const CircleAvatar(

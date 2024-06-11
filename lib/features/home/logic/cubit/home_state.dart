@@ -7,8 +7,6 @@ abstract class HomeState {
 
   const HomeState(
       {required this.isHourlyForecast, required this.isHomeSheetExpanded});
-
-  // final bool? isHourlyForecast;
 }
 
 class HomeInitial extends HomeState {

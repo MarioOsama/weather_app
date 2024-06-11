@@ -15,11 +15,12 @@ class ShortWeatherSummarization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cityName = getCityName(weather);
     return Column(
       children: [
         verticalSpace(50),
         Text(
-          weather.cityName.getFirst(' ', 3),
+          cityName,
           style: AppTextStyles.font28WhiteRegular,
         ),
         Text(
@@ -30,5 +31,15 @@ class ShortWeatherSummarization extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String getCityName(CurrentWeatherResponseBody weather) {
+    if (weather.cityName.contains(',') ||
+        weather.cityName.split(' ').length > 3) {
+      final cityName = weather.cityName.getFirst(' ', 3);
+      return cityName;
+    } else {
+      return weather.cityName;
+    }
   }
 }

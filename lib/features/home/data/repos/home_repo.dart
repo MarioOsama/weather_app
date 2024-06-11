@@ -3,6 +3,7 @@ import 'package:weather_app/core/networking/api_services.dart';
 import 'package:weather_app/features/home/data/models/forecast_weather_response_body.dart';
 import 'package:weather_app/features/home/data/models/weather_request_body.dart';
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
+import 'package:weather_app/features/search/data/models/city_weather_request_body.dart';
 
 class HomeRepo {
   final ApiServices _apiServices;
@@ -21,6 +22,18 @@ class HomeRepo {
     final ForecastWeatherResponseBody forecastData =
         await _apiServices.getForecastedWeatherData(currentWeatherRequestBody);
     return forecastData;
+  }
+
+  Future<CurrentWeatherResponseBody> getCurrentWeatherDataByCityName(
+      CityWeatherRequestBody cityWeatherRequestBody) async {
+    return await _apiServices
+        .getCurrentWeatherDataByCityName(cityWeatherRequestBody);
+  }
+
+  Future<ForecastWeatherResponseBody> getForecastDataByCityName(
+      CityWeatherRequestBody cityWeatherRequestBody) async {
+    return await _apiServices
+        .getForecastedWeatherDataByCityName(cityWeatherRequestBody);
   }
 
   Future<Position> getCurrentLocation() async {

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/di/dependency_injection.dart';
 import 'package:weather_app/core/routing/app_routes.dart';
+import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 import 'package:weather_app/features/home/logic/cubit/home_cubit.dart';
 import 'package:weather_app/features/home/ui/home_screen.dart';
 import 'package:weather_app/features/on_boarding/cubit/on_boarding_cubit.dart';
 import 'package:weather_app/features/on_boarding/ui/on_boarding_screen.dart';
+import 'package:weather_app/features/search/logic/cubit/search_cubit.dart';
 import 'package:weather_app/features/search/ui/search_screen.dart';
 
 class AppRouter {
@@ -32,7 +34,12 @@ class AppRouter {
         );
       case AppRoutes.search:
         return MaterialPageRoute(
-          builder: (_) => const SearchScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<SearchCubit>(),
+            child: SearchScreen(
+              currentWeather: args as CurrentWeatherResponseBody,
+            ),
+          ),
         );
       default:
         return MaterialPageRoute(

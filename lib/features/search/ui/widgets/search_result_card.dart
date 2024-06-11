@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/core/theming/app_colors.dart';
-import 'package:weather_app/features/home/ui/widgets/high_low_degrees.dart';
-import 'package:weather_app/features/search/data/models/search_result_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/helpers/extensions.dart';
+import 'package:weather_app/core/theming/app_text_styles.dart';
+import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
+import 'package:weather_app/features/search/data/models/city_weather_response_body.dart';
+import 'package:weather_app/features/search/logic/cubit/search_cubit.dart';
+import 'package:weather_app/features/search/logic/cubit/search_state.dart';
 import 'package:weather_app/features/search/ui/widgets/card_footer.dart';
 import 'package:weather_app/features/search/ui/widgets/card_header.dart';
 
 class SearchResultCard extends StatefulWidget {
   const SearchResultCard({
     super.key,
-    required this.result,
     required this.index,
   });
 
-  final SearchResultModel result;
   final double index;
 
   @override
@@ -46,33 +48,73 @@ class _SearchResultCardState extends State<SearchResultCard>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSlide(
-      duration: const Duration(milliseconds: 0),
-      offset: _animation.value,
-      child: Container(
-        width: double.infinity,
-        padding:
-            const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 10),
-        decoration: _buildCardDecoration(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CardHeader(temp: widget.result.temp),
-            HighLowDegrees(
-              high: widget.result.high,
-              low: widget.result.low,
-              color: AppColors.greyColor,
-              fontSize: 16,
-              center: false,
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        CityWeatherResponseBody? searchResult;
+
+        if (state is SearchInitial || state is SearchError) {
+          final CurrentWeatherResponseBody? currentWeather =
+              context.read<SearchCubit>().state.currentWeather;
+
+          searchResult = currentWeather != null
+              ? CityWeatherResponseBody(
+                  cityName: currentWeather.cityName,
+                  country: currentWeather.country,
+                  temp: currentWeather.temp,
+                  weatherDescription: currentWeather.weatherDescription)
+              : null;
+        } else if (state is SearchLoaded) {
+          searchResult = state.searchResult;
+        } else if (state is SearchLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        return AnimatedSlide(
+          duration: const Duration(milliseconds: 0),
+          offset: _animation.value,
+          child: Container(
+            width: double.infinity,
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 0),
+            decoration: _buildCardDecoration(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CardHeader(
+                  temp: searchResult!.temp.round().toString(),
+                  weatherDescription: searchResult.weatherDescription,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
+                  child: Text(
+                    searchResult.country,
+                    style: AppTextStyles.font20WhiteRegular,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: CardFooter(
+                    cityName: getCityName(searchResult),
+                    weatherCondition: searchResult.weatherDescription,
+                  ),
+                ),
+              ],
             ),
-            CardFooter(
-              cityName: widget.result.cityName,
-              weatherCondition: widget.result.weatherCondition,
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  String getCityName(CityWeatherResponseBody searchResult) {
+    if (searchResult.cityName.contains(',') ||
+        searchResult.cityName.split(' ').length > 3) {
+      return searchResult.cityName.getFirst(' ', 3);
+    } else {
+      return searchResult.cityName;
+    }
   }
 
   BoxDecoration _buildCardDecoration() {

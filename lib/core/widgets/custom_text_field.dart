@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/core/helpers/app_texts.dart';
+import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
+import 'package:weather_app/features/search/logic/cubit/search_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
   });
+
+  @override
+  State<CustomTextField> createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  late TextEditingController _searchController;
+
+  @override
+  initState() {
+    super.initState();
+    _searchController = context.read<SearchCubit>().searchController;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +39,20 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
+        controller: _searchController,
+        style: AppTextStyles.font20WhiteRegular,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
-          hintText: AppTexts.searchForCity,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+          hintText: AppStrings.searchForCity,
           hintStyle: AppTextStyles.font18GreyRegular,
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColors.greyColor,
+          suffixIcon: GestureDetector(
+            onTap: () {
+              context.read<SearchCubit>().validateThenSearch();
+            },
+            child: const Icon(
+              Icons.search,
+              color: AppColors.greyColor,
+            ),
           ),
           constraints: const BoxConstraints(
             maxHeight: 40,
@@ -52,5 +74,11 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }
