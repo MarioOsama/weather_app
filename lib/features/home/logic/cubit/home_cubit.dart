@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/core/networking/api_constant.dart';
+import 'package:weather_app/core/networking/failure.dart';
 import 'package:weather_app/features/home/data/models/forecast_weather_response_body.dart';
 import 'package:weather_app/features/home/data/models/weather_request_body.dart';
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
@@ -29,7 +30,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeLoaded(weather, weeklyWeather, forecastedWeather,
           isHomeSheetExpanded: true));
     } else if (state is HomeError) {
-      final String error = (state as HomeError).message;
+      final Failure error = (state as HomeError).failure;
       emit(HomeError(error, isHomeSheetExpanded: true));
     }
   }
@@ -52,7 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeLoaded(weather, weeklyWeather, forecastedWeather,
           isHomeSheetExpanded: false));
     } else if (state is HomeError) {
-      final String error = (state as HomeError).message;
+      final Failure error = (state as HomeError).failure;
       emit(HomeError(error, isHomeSheetExpanded: false));
     }
   }
@@ -65,9 +66,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  void loadWeatherData(String forecastType) async {
+  void loadWeatherData(String forecastType, String language) async {
     final bool isHourlyForecast = _getForecastType(forecastType);
-    // emit(HomeLoading(isHourlyForecast: isHourlyForecast));
     emit(const HomeLoading());
     Position currentLocation = await _homeRepo.getCurrentLocation();
     final currentPosLon = currentLocation.longitude;
@@ -78,6 +78,7 @@ class HomeCubit extends Cubit<HomeState> {
       lat: currentPosLat,
       apiKey: ApiConstants.apiKey,
       units: 'metric',
+      lang: language,
     );
 
     final CurrentWeatherResponseBody weatherData =
@@ -102,12 +103,13 @@ class HomeCubit extends Cubit<HomeState> {
     ));
   }
 
-  void loadWeatherDataByCityName(String cityName) async {
+  void loadWeatherDataByCityName(String cityName, String language) async {
     emit(const HomeLoading());
     final CityWeatherRequestBody request = CityWeatherRequestBody(
       cityName: cityName,
       apiKey: ApiConstants.apiKey,
       units: 'metric',
+      lang: language,
     );
 
     final CurrentWeatherResponseBody weatherData =

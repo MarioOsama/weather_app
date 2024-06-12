@@ -12,6 +12,7 @@ WeatherRequestBody _$WeatherRequestBodyFromJson(Map<String, dynamic> json) =>
       lat: (json['lat'] as num).toDouble(),
       apiKey: json['appid'] as String,
       units: json['units'] as String,
+      lang: json['lang'] as String? ?? 'en',
     );
 
 Map<String, dynamic> _$WeatherRequestBodyToJson(WeatherRequestBody instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$WeatherRequestBodyToJson(WeatherRequestBody instance) =>
       'lat': instance.lat,
       'appid': instance.apiKey,
       'units': instance.units,
+      'lang': instance.lang,
     };

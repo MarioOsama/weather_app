@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/networking/api_constant.dart';
 import 'package:weather_app/core/networking/failure.dart';
@@ -19,20 +20,22 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchInitial(currentWeather: currentWeather));
   }
 
-  void validateThenSearch() {
+  void validateThenSearch(String language) {
     if (searchController.text.trim().isEmpty ||
         searchController.text.trim().length < 3) {
       emit(SearchError(
           Failure(ResponseCode.INVALID_CITY_NAME,
-              ResponseMessage.INVALID_CITY_NAME),
+              ResponseMessage.INVALID_CITY_NAME.tr()),
           currentWeather: state.currentWeather!));
     } else {
       emit(SearchLoading(currentWeather: state.currentWeather!));
       final CityWeatherRequestBody cityWeatherRequestBody =
           CityWeatherRequestBody(
-              cityName: searchController.text.trim(),
-              units: 'metric',
-              apiKey: ApiConstants.apiKey);
+        cityName: searchController.text.trim(),
+        units: 'metric',
+        apiKey: ApiConstants.apiKey,
+        lang: language,
+      );
 
       searchCityWeather(cityWeatherRequestBody);
     }

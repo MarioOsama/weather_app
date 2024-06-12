@@ -13,12 +13,20 @@ class SheetHeaderActionButton extends StatelessWidget {
   final String title;
   final bool isSelected;
 
+  String get getForecastType {
+    if (title.contains("Hourly") || title.contains("اليوميه")) {
+      return "Hourly";
+    } else {
+      return "Weekly";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         if (isSelected) return;
-        context.read<HomeCubit>().toggleForecastType(title);
+        context.read<HomeCubit>().toggleForecastType(getForecastType);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
@@ -33,7 +41,7 @@ class SheetHeaderActionButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          '$title Forecast',
+          title,
           style: AppTextStyles.font16GreyMedium,
         ),
       ),

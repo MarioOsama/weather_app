@@ -8,12 +8,14 @@ class WeatherRequestBody {
       {required this.lon,
       required this.lat,
       required this.apiKey,
-      required this.units});
+      required this.units,
+      this.lang = 'en'});
   final double lon;
   final double lat;
   @JsonKey(name: 'appid')
   final String apiKey;
   final String units;
+  final String? lang;
 
   factory WeatherRequestBody.fromJson(Map<String, dynamic> json) =>
       _$WeatherRequestBodyFromJson(json);

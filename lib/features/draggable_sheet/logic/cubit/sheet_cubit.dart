@@ -56,8 +56,8 @@ class SheetCubit extends Cubit<SheetState> {
         final dateKey = forecastedWeather[index].keys.first;
         return WeeklyConditionItemModel(
           date: dateKey,
-          highestTemp: forecastedWeather[index][dateKey]!.last,
-          lowestTemp: forecastedWeather[index][dateKey]!.first,
+          highestTemp: forecastedWeather[index][dateKey]!.last.toDouble(),
+          lowestTemp: forecastedWeather[index][dateKey]!.first.toDouble(),
         );
       },
     );

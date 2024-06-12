@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/core/helpers/extensions.dart';
 import 'package:weather_app/core/helpers/spacing.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
@@ -15,13 +14,15 @@ class ShortWeatherSummarization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cityName = getCityName(weather);
     return Column(
       children: [
         verticalSpace(50),
-        Text(
-          cityName,
-          style: AppTextStyles.font28WhiteRegular,
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            weather.cityName,
+            style: AppTextStyles.font28WhiteRegular,
+          ),
         ),
         Text(
           '${weather.temp.round()}° | ${weather.weatherDescription}',
@@ -31,15 +32,5 @@ class ShortWeatherSummarization extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String getCityName(CurrentWeatherResponseBody weather) {
-    if (weather.cityName.contains(',') ||
-        weather.cityName.split(' ').length > 3) {
-      final cityName = weather.cityName.getFirst(' ', 3);
-      return cityName;
-    } else {
-      return weather.cityName;
-    }
   }
 }

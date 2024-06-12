@@ -12,6 +12,7 @@ CityWeatherRequestBody _$CityWeatherRequestBodyFromJson(
       cityName: json['q'] as String,
       units: json['units'] as String,
       apiKey: json['apiKey'] as String,
+      lang: json['lang'] as String? ?? 'en',
     );
 
 Map<String, dynamic> _$CityWeatherRequestBodyToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$CityWeatherRequestBodyToJson(
       'q': instance.cityName,
       'units': instance.units,
       'apiKey': instance.apiKey,
+      'lang': instance.lang,
     };

@@ -48,6 +48,9 @@ dependencies:
   retrofit_generator: ^8.1.0
   shared_preferences: ^2.2.3
   either_dart: ^1.0.0
+  easy_localization: ^3.0.7
+  connectivity_plus: ^6.0.3
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_lints: ^4.0.0
@@ -68,6 +71,7 @@ flutter:
   assets:
     - assets/images/svgs/
     - assets/images/pngs/
+    - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

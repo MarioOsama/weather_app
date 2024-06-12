@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
 import 'package:weather_app/features/search/logic/cubit/search_cubit.dart';
@@ -16,16 +18,16 @@ class SearchErrorBlocListener extends StatelessWidget {
           showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                    title: const Text('Error',
+                    title: Text(AppStrings.error.tr(),
                         style: AppTextStyles.font20WhiteRegular),
                     content: Text(
-                      state.failure.message,
+                      state.failure.message.tr(),
                       style: AppTextStyles.font16GreyMedium,
                     ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('OK',
+                        child: Text(AppStrings.ok.tr(),
                             style: AppTextStyles.font13WhiteSemiBold),
                       )
                     ],

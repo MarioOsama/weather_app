@@ -27,10 +27,10 @@ class DayWeatherSummarization extends StatelessWidget {
           current is HomeLoaded || current is HomeError,
       builder: (context, state) {
         if (state is HomeError) {
-          log(state.message);
+          log(state.failure.message);
           return Center(
             child: Text(
-              state.message,
+              state.failure.message,
               style: AppTextStyles.font16WhiteRegular,
             ),
           );
