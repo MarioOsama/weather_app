@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
 import 'package:weather_app/features/draggable_sheet/data/models/weekly_condition_item_model.dart';
@@ -19,6 +21,7 @@ class WeeklyConditionItem extends StatelessWidget {
       width: 60,
       decoration: _buildDecoration(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FittedBox(
@@ -27,13 +30,19 @@ class WeeklyConditionItem extends StatelessWidget {
               style: AppTextStyles.font15WhiteSemiBold,
             ),
           ),
-          Text(
-            'H: ${weeklyConditionItemModel.highestTemp.round()}°',
-            style: AppTextStyles.font13WhiteSemiBold,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              '${AppStrings.h.tr()}: ${weeklyConditionItemModel.highestTemp.round()}°',
+              style: AppTextStyles.font13WhiteSemiBold,
+            ),
           ),
-          Text(
-            'L: ${weeklyConditionItemModel.lowestTemp.round()}°',
-            style: AppTextStyles.font13WhiteSemiBold,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              '${AppStrings.l.tr()}: ${weeklyConditionItemModel.lowestTemp.round()}°',
+              style: AppTextStyles.font13WhiteSemiBold,
+            ),
           ),
         ],
       ),

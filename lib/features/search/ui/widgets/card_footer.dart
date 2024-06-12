@@ -14,15 +14,24 @@ class CardFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          cityName,
-          style: AppTextStyles.font20WhiteRegular,
+        Flexible(
+          flex: 3,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              cityName,
+              style: AppTextStyles.font20WhiteRegular,
+            ),
+          ),
         ),
-        const Spacer(),
-        Text(
-          weatherCondition,
-          style: AppTextStyles.font16WhiteRegular,
+        Flexible(
+          flex: 1,
+          child: Text(
+            weatherCondition,
+            style: AppTextStyles.font16WhiteRegular,
+          ),
         ),
       ],
     );

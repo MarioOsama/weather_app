@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/core/helpers/extensions.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 import 'package:weather_app/features/search/data/models/city_weather_response_body.dart';
@@ -74,47 +73,41 @@ class _SearchResultCardState extends State<SearchResultCard>
         return AnimatedSlide(
           duration: const Duration(milliseconds: 0),
           offset: _animation.value,
-          child: Container(
-            width: double.infinity,
-            padding:
-                const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 0),
-            decoration: _buildCardDecoration(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CardHeader(
-                  temp: searchResult!.temp.round().toString(),
-                  weatherDescription: searchResult.weatherDescription,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
-                  child: Text(
-                    searchResult.country,
-                    style: AppTextStyles.font20WhiteRegular,
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, bottom: 10, top: 0),
+              decoration: _buildCardDecoration(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CardHeader(
+                    temp: searchResult!.temp.round().toString(),
+                    weatherDescription: searchResult.weatherDescription,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: CardFooter(
-                    cityName: getCityName(searchResult),
-                    weatherCondition: searchResult.weatherDescription,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),
+                    child: Text(
+                      searchResult.country,
+                      style: AppTextStyles.font20WhiteRegular,
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: CardFooter(
+                      cityName: searchResult.cityName,
+                      weatherCondition: searchResult.weatherDescription,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
       },
     );
-  }
-
-  String getCityName(CityWeatherResponseBody searchResult) {
-    if (searchResult.cityName.contains(',') ||
-        searchResult.cityName.split(' ').length > 3) {
-      return searchResult.cityName.getFirst(' ', 3);
-    } else {
-      return searchResult.cityName;
-    }
   }
 
   BoxDecoration _buildCardDecoration() {

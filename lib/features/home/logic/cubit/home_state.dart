@@ -1,3 +1,4 @@
+import 'package:weather_app/core/networking/failure.dart';
 import 'package:weather_app/features/home/data/models/current_weather_response_body.dart';
 import 'package:weather_app/features/home/data/models/forecast_weather_response_body.dart';
 
@@ -45,10 +46,10 @@ class HomeLoaded extends HomeState {
 }
 
 class HomeError extends HomeState {
-  const HomeError(this.message,
+  const HomeError(this.failure,
       {super.isHomeSheetExpanded = false, super.isHourlyForecast = true});
 
-  final String message;
+  final Failure failure;
 }
 
 class HomeNoInternet extends HomeState {

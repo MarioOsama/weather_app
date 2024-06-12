@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
@@ -8,7 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
+    required this.onSearch,
   });
+
+  final void Function() onSearch;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -43,12 +47,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         style: AppTextStyles.font20WhiteRegular,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-          hintText: AppStrings.searchForCity,
+          hintText: AppStrings.enterCityName.tr(),
           hintStyle: AppTextStyles.font18GreyRegular,
           suffixIcon: GestureDetector(
-            onTap: () {
-              context.read<SearchCubit>().validateThenSearch();
-            },
+            onTap: widget.onSearch,
             child: const Icon(
               Icons.search,
               color: AppColors.greyColor,

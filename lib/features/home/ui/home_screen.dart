@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/di/dependency_injection.dart';
+import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/features/draggable_sheet/logic/cubit/sheet_cubit.dart';
 import 'package:weather_app/features/draggable_sheet/ui/draggable_sheet.dart';
@@ -17,8 +19,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the language of the device
+    final String language = context.locale.languageCode;
     // Loading hourly data
-    context.read<HomeCubit>().loadWeatherData('Hourly');
+    context.read<HomeCubit>().loadWeatherData('Hourly', language);
     // Check if it is night or day
     final bool isNight = _getDayOrNight();
     return Scaffold(
@@ -46,9 +50,9 @@ class HomeScreen extends StatelessWidget {
             isNight: isNight,
           ),
         ),
-        const Center(
+        Center(
           child: LoadingContainer(
-            message: 'Get the weather data',
+            message: AppStrings.getTheWeatherData.tr(),
           ),
         ),
       ],

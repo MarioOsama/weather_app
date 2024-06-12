@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/helpers/extensions.dart';
@@ -17,12 +18,15 @@ class SearchIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeCubit homeCubit = context.read<HomeCubit>();
     final currentWeather = (homeCubit.state as HomeLoaded).currentWeather;
+
+    // Get device language
+    final String language = context.locale.languageCode;
     return GestureDetector(
       onTap: () async {
         final String? cityName = await context.pushNamed(AppRoutes.search,
             arguments: currentWeather);
         if (cityName != null) {
-          homeCubit.loadWeatherDataByCityName(cityName);
+          homeCubit.loadWeatherDataByCityName(cityName, language);
         }
       },
       child: Icon(

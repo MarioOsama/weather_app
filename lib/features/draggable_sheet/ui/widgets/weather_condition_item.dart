@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
 import 'package:weather_app/core/theming/app_text_styles.dart';
 import 'package:weather_app/features/draggable_sheet/data/models/weather_condition_item_model.dart';
@@ -32,7 +34,7 @@ class WeatherConditionItem extends StatelessWidget {
         children: [
           FittedBox(
             child: Text(
-              '${getHour(isNightHour)} ${isNightHour ? 'PM' : 'AM'}',
+              '${getHour(isNightHour)} ${isNightHour ? AppStrings.pm.tr() : AppStrings.am.tr()}',
               style: AppTextStyles.font15WhiteSemiBold,
             ),
           ),

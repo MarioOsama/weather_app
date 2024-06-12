@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/helpers/app_string.dart';
 import 'package:weather_app/core/helpers/extensions.dart';
 import 'package:weather_app/core/helpers/spacing.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
@@ -27,15 +31,27 @@ class SearchScreen extends StatelessWidget {
     SearchCubit searchCubit = context.read<SearchCubit>();
     searchCubit.setupSearch(currentWeather);
 
+    // Get the language of the device
+    final String language = context.locale.languageCode;
+    log(language);
+
     return Scaffold(
         body: Container(
       decoration: _buildDecoration(),
       child: Column(
         children: <Widget>[
-          const CustomAppBar(title: 'Search'),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 25.0),
-            child: CustomTextField(),
+          CustomAppBar(
+            title: AppStrings.search.tr(),
+            backIcon:
+                language == 'ar' ? Icons.keyboard_arrow_right_outlined : null,
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 25.0),
+            child: CustomTextField(
+              onSearch: () =>
+                  context.read<SearchCubit>().validateThenSearch(language),
+            ),
           ),
           verticalSpace(20),
           GestureDetector(
@@ -76,10 +92,9 @@ class SearchScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Change Location',
+        title: Text(AppStrings.changeLocation.tr(),
             style: AppTextStyles.font20WhiteRegular),
-        content: const Text(
-            'Are you sure to change the weather condition to this region?',
+        content: Text(AppStrings.changeRegion.tr(),
             style: AppTextStyles.font16GreyMedium),
         actions: <Widget>[
           TextButton(
@@ -87,15 +102,15 @@ class SearchScreen extends StatelessWidget {
               context.pop();
               context.pop(cityWeather!.cityName);
             },
-            child: const Text(
-              'OK',
+            child: Text(
+              AppStrings.ok.tr(),
               style: AppTextStyles.font13WhiteSemiBold,
             ),
           ),
           TextButton(
             onPressed: () => context.pop(),
-            child: const Text(
-              'Cancel',
+            child: Text(
+              AppStrings.cancel.tr(),
               style: AppTextStyles.font13WhiteSemiBold,
             ),
           ),
