@@ -17,12 +17,12 @@ class SearchIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeCubit homeCubit = context.read<HomeCubit>();
-    final currentWeather = (homeCubit.state as HomeLoaded).currentWeather;
 
     // Get device language
     final String language = context.locale.languageCode;
     return GestureDetector(
       onTap: () async {
+        final currentWeather = (homeCubit.state as HomeLoaded).currentWeather;
         final String? cityName = await context.pushNamed(AppRoutes.search,
             arguments: currentWeather);
         if (cityName != null) {

@@ -28,5 +28,8 @@
     "cahnge region" : "هل تريد تغيير الطقس لهذه المنطقه؟",
     "Not Found": "لم يتم العثور على نتائج",
     "please enter a valid city name": "الرجاء ادخال اسم مدينة صالح",
-    "please check your internet connection": "الرجاء التأكد من اتصالك بالانترنت"
+    "please check your internet connection": "الرجاء التأكد من اتصالك بالانترنت",
+    "location permission disabled": "قم بتفعيل خدمات الوصول الى الموقع",
+    "location permission denied": "تم رفض خدمات الوصول الى الموقع",
+    "location permanently denied": "تم رفض خدمات الوصول الى الموقع بشكل دائم"
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/theming/app_colors.dart';
@@ -27,7 +26,6 @@ class DayWeatherSummarization extends StatelessWidget {
           current is HomeLoaded || current is HomeError,
       builder: (context, state) {
         if (state is HomeError) {
-          log(state.failure.message);
           return Center(
             child: Text(
               state.failure.message,

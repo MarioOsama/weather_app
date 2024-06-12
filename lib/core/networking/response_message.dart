@@ -18,6 +18,8 @@ class ResponseMessage {
   // local status code
   static const String CONNECT_TIMEOUT = AppStrings.timeoutError;
   static const String NO_INTERNET_CONNECTION = AppStrings.noInternetError;
+  static const String LOCATION_PERMISSION_DENIED =
+      AppStrings.locationPermissionDeniedError;
   static const String DEFAULT = AppStrings.defaultError;
   static const String INVALID_CITY_NAME = AppStrings.invalidCityNameError;
 }

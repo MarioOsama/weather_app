@@ -7,15 +7,20 @@ class LoadingContainer extends StatelessWidget {
   const LoadingContainer({
     super.key,
     required this.message,
+    this.icon,
   });
 
   final String message;
+  final Icon? icon;
 
   @override
   Widget build(BuildContext context) {
+    final isIconExist = icon != null;
     return Container(
+      width: double.infinity,
       height: MediaQuery.sizeOf(context).height * 0.2,
       margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: const LinearGradient(
@@ -30,14 +35,19 @@ class LoadingContainer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SpinKitSpinningLines(
-            color: Colors.white,
-            size: 50.0,
-          ),
+          isIconExist
+              ? icon!
+              : const SpinKitSpinningLines(
+                  color: Colors.white,
+                  size: 50.0,
+                ),
           const SizedBox(height: 20),
-          Text(
-            message,
-            style: AppTextStyles.font20WhiteRegular,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              message,
+              style: AppTextStyles.font20WhiteRegular,
+            ),
           ),
         ],
       ),
