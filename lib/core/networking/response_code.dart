@@ -7,6 +7,7 @@ class ResponseCode {
   static const int INTERNAL_SERVER_ERROR = 500; // failure, crash in server side
   static const int NOT_FOUND = 404; // failure, not found
   static const int NO_INTERNET_CONNECTION = -1;
+  static const int LOCATION_PERMISSION_DENIED = -4;
   static const int CONNECT_TIMEOUT = -2;
   static const int DEFAULT = -3;
   static const int INVALID_CITY_NAME = 1001;

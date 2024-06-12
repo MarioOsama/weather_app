@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,9 +53,6 @@ class WeatherDetailsColumn extends StatelessWidget {
 
 List<WeatherDetailsItemModel> getWeatherDetailsModelList(
     CurrentWeatherResponseBody currentWeather) {
-  log((currentWeather.temp.round() - currentWeather.feelsLike.round())
-      .abs()
-      .toString());
   return [
     WeatherDetailsItemModel(
         icon: Icons.sunny_snowing,

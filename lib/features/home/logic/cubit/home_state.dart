@@ -58,6 +58,8 @@ class HomeNoInternet extends HomeState {
 }
 
 class HomeNoLocation extends HomeState {
-  const HomeNoLocation(
+  const HomeNoLocation(this.message,
       {super.isHomeSheetExpanded = false, super.isHourlyForecast = true});
+
+  final String message;
 }

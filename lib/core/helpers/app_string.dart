@@ -41,4 +41,8 @@ class AppStrings {
   static const cacheError = "cache error, try again later";
   static const noInternetError = "please check your internet connection";
   static const invalidCityNameError = "please enter a valid city name";
+  static const locationPermissionDisabledError = "location disabled";
+  static const locationPermissionDeniedError = "location denied";
+  static const locationPermissionPermanentlyDeniedError =
+      "location permanently denied";
 }

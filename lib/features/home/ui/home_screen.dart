@@ -9,6 +9,7 @@ import 'package:weather_app/features/draggable_sheet/ui/draggable_sheet.dart';
 import 'package:weather_app/features/home/logic/cubit/home_cubit.dart';
 import 'package:weather_app/features/home/logic/cubit/home_state.dart';
 import 'package:weather_app/features/home/ui/widgets/background_image.dart';
+import 'package:weather_app/features/home/ui/widgets/home_error_bloc_listener.dart';
 import 'package:weather_app/features/home/ui/widgets/house_item.dart';
 import 'package:weather_app/features/home/ui/widgets/day_weather_summarization.dart';
 import 'package:weather_app/features/home/ui/widgets/loading_container.dart';
@@ -30,8 +31,16 @@ class HomeScreen extends StatelessWidget {
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           final bool isHomeHidden = state.isHomeSheetExpanded;
-          if (state is HomeLoading) {
+          if (state is HomeLoading || state is HomeInitial) {
             return _buildLoadingHome(isNight);
+          }
+
+          if (state is HomeNoInternet) {
+            return _buildNoInternetHome(isNight, context);
+          }
+
+          if (state is HomeNoLocation) {
+            return _buildNoLocationHome(isNight, context, state.message);
           }
 
           return _buildLoadedHome(isHomeHidden, isNight, context);
@@ -55,6 +64,7 @@ class HomeScreen extends StatelessWidget {
             message: AppStrings.getTheWeatherData.tr(),
           ),
         ),
+        const HomeErrorBlocListener(),
       ],
     );
   }
@@ -88,6 +98,54 @@ class HomeScreen extends StatelessWidget {
         BlocProvider<SheetCubit>(
           create: (context) => getIt<SheetCubit>(),
           child: const DraggableSheet(),
+        ),
+        const HomeErrorBlocListener(),
+      ],
+    );
+  }
+
+  Widget _buildNoInternetHome(bool isNight, BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Opacity(
+          opacity: 0.25,
+          child: BackgroundImage(
+            isNight: isNight,
+          ),
+        ),
+        Center(
+          child: LoadingContainer(
+              message: AppStrings.noInternetError.tr(),
+              icon: const Icon(
+                Icons.wifi_off,
+                color: Colors.white,
+                size: 50.0,
+              )),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNoLocationHome(
+      bool isNight, BuildContext context, String errorMessage) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Opacity(
+          opacity: 0.25,
+          child: BackgroundImage(
+            isNight: isNight,
+          ),
+        ),
+        Center(
+          child: LoadingContainer(
+              message: errorMessage.tr(),
+              icon: const Icon(
+                Icons.location_off,
+                color: Colors.white,
+                size: 50.0,
+              )),
         ),
       ],
     );

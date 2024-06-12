@@ -68,8 +68,25 @@ class HomeCubit extends Cubit<HomeState> {
 
   void loadWeatherData(String forecastType, String language) async {
     final bool isHourlyForecast = _getForecastType(forecastType);
+
+    // Check internet connection
+    final bool isConnected = await checkInternetConnection();
+    if (!isConnected) {
+      emit(const HomeNoInternet());
+      return;
+    }
+
+    // Get weather data
     emit(const HomeLoading());
-    Position currentLocation = await _homeRepo.getCurrentLocation();
+
+    // Check location permission
+    Position currentLocation = await _homeRepo
+        .getCurrentLocation()
+        .then((value) => value, onError: (error) {
+      emit(HomeNoLocation(error));
+    });
+
+    // Get current location coordinates
     final currentPosLon = currentLocation.longitude;
     final currentPosLat = currentLocation.latitude;
 
@@ -82,14 +99,10 @@ class HomeCubit extends Cubit<HomeState> {
     );
 
     final CurrentWeatherResponseBody weatherData =
-        await _homeRepo.getWeatherData(
-      request,
-    );
+        await getCurrentWeatherData(request);
 
     final ForecastWeatherResponseBody forecastedWeatherData =
-        await _homeRepo.getForecastData(
-      request,
-    );
+        await getForecastedWeatherData(request);
 
     final ForecastWeatherResponseBody weeklyResponseBody =
         ForecastWeatherResponseBody(
@@ -101,6 +114,40 @@ class HomeCubit extends Cubit<HomeState> {
       weeklyResponseBody,
       forecastedWeatherData,
     ));
+  }
+
+  Future<bool> checkInternetConnection() {
+    return _homeRepo.hasInternetConnection();
+  }
+
+  Future<CurrentWeatherResponseBody> getCurrentWeatherData(request) async {
+    final currentWeatherDataResult = await _homeRepo.getWeatherData(
+      request,
+    );
+    return currentWeatherDataResult.fold(
+      (failure) {
+        emit(HomeError(failure));
+        throw failure.message;
+      },
+      (currentWeatherData) {
+        return currentWeatherData;
+      },
+    );
+  }
+
+  Future<ForecastWeatherResponseBody> getForecastedWeatherData(request) async {
+    final forecastedWeatherDataResult = await _homeRepo.getForecastData(
+      request,
+    );
+    return forecastedWeatherDataResult.fold(
+      (failure) {
+        emit(HomeError(failure));
+        throw failure.message;
+      },
+      (forecastedWeatherData) {
+        return forecastedWeatherData;
+      },
+    );
   }
 
   void loadWeatherDataByCityName(String cityName, String language) async {

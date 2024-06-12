@@ -17,11 +17,14 @@ class ShortWeatherSummarization extends StatelessWidget {
     return Column(
       children: [
         verticalSpace(50),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            weather.cityName,
-            style: AppTextStyles.font28WhiteRegular,
+        Padding(
+          padding: const EdgeInsets.only(left: 30.0, right: 30.0, top: 25.0),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              weather.cityName,
+              style: AppTextStyles.font20WhiteSemiBold,
+            ),
           ),
         ),
         Text(

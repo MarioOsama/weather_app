@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,8 +31,6 @@ class SearchScreen extends StatelessWidget {
 
     // Get the language of the device
     final String language = context.locale.languageCode;
-    log(language);
-
     return Scaffold(
         body: Container(
       decoration: _buildDecoration(),

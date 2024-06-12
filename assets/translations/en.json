@@ -28,5 +28,8 @@
     "cahnge region" : "Are you sure to change the weather condition to this region?",
     "Not Found": "Not Found",
     "please enter a valid city name": "Please enter a valid city name",
-    "please check your internet connection": "Please check your internet connection"
+    "please check your internet connection": "Please check your internet connection",
+    "location permission denied": "Location permission denied",
+    "location permission disabled": "Location permission disabled",
+    "location permanently denied": "Location permission permanently denied"
 }
