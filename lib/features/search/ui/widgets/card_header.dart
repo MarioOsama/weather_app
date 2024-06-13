@@ -6,11 +6,11 @@ class CardHeader extends StatelessWidget {
   const CardHeader({
     super.key,
     required this.temp,
-    required this.weatherDescription,
+    required this.weatherMain,
   });
 
   final String temp;
-  final String weatherDescription;
+  final String weatherMain;
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +22,24 @@ class CardHeader extends StatelessWidget {
         ),
         const Spacer(),
         Image.asset(
-          setWeatherIcon(weatherDescription),
+          setWeatherIcon(weatherMain),
           width: 130,
         ),
       ],
     );
   }
 
-  static setWeatherIcon(String weatherDescription) {
-    final String weather = weatherDescription.toLowerCase();
-    if (weather.contains('clear')) {
+  static setWeatherIcon(String weatherMain) {
+    final String weather = weatherMain;
+    if (weather.contains('Clear')) {
       return Assets.imagesPngsSun;
-    } else if (weather.contains('clouds')) {
+    } else if (weather.contains('Clouds')) {
       return Assets.imagesPngsClouds;
-    } else if (weather.contains('rain')) {
+    } else if (weather.contains('Rain')) {
       return Assets.imagesPngsRainyCloud;
-    } else if (weather.contains('snow')) {
+    } else if (weather.contains('Snow')) {
       return Assets.imagesPngsSnow;
-    } else if (weather.contains('thunderstorm')) {
+    } else if (weather.contains('Thunderstorm')) {
       return Assets.imagesPngsThunder;
     } else {
       return Assets.imagesPngsSun;

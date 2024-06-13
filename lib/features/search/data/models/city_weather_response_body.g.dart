@@ -14,6 +14,7 @@ CityWeatherResponseBody _$CityWeatherResponseBodyFromJson(
       temp: CityWeatherResponseBody._tempFromJson(json),
       weatherDescription:
           CityWeatherResponseBody._weatherDescriptionFromJson(json),
+      weatherMain: CityWeatherResponseBody._weatherMainFromJson(json),
     );
 
 Map<String, dynamic> _$CityWeatherResponseBodyToJson(
