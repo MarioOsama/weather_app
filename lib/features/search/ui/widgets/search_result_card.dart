@@ -60,7 +60,9 @@ class _SearchResultCardState extends State<SearchResultCard>
                   cityName: currentWeather.cityName,
                   country: currentWeather.country,
                   temp: currentWeather.temp,
-                  weatherDescription: currentWeather.weatherDescription)
+                  weatherDescription: currentWeather.weatherDescription,
+                  weatherMain: currentWeather.weatherMain,
+                )
               : null;
         } else if (state is SearchLoaded) {
           searchResult = state.searchResult;
@@ -85,7 +87,7 @@ class _SearchResultCardState extends State<SearchResultCard>
                 children: [
                   CardHeader(
                     temp: searchResult!.temp.round().toString(),
-                    weatherDescription: searchResult.weatherDescription,
+                    weatherMain: searchResult.weatherMain,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0, left: 10.0),

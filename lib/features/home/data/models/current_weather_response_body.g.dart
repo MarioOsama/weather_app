@@ -21,6 +21,7 @@ CurrentWeatherResponseBody _$CurrentWeatherResponseBodyFromJson(
       sunset: CurrentWeatherResponseBody._sunsetFromJson(json),
       feelsLike: CurrentWeatherResponseBody._feelsLikeFromJson(json),
       country: CurrentWeatherResponseBody._countryFromJson(json),
+      weatherMain: CurrentWeatherResponseBody._weatherMainFromJson(json),
     );
 
 Map<String, dynamic> _$CurrentWeatherResponseBodyToJson(
