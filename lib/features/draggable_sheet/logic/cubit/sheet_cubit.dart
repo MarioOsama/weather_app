@@ -42,7 +42,7 @@ class SheetCubit extends Cubit<SheetState> {
           dateTime: DateTime.parse(dateKey),
           icon: WeatherConditionItemModel.setWeatherIcon(
               todayWeather[index][dateKey]['weather']),
-          temp: todayWeather[index][dateKey]['temp'],
+          temp: todayWeather[index][dateKey]['temp'].toDouble(),
         );
       },
     );
