@@ -17,6 +17,7 @@ class CurrentWeatherResponseBody {
     required this.feelsLike,
     required this.country,
     required this.weatherMain,
+    required this.timezone,
   });
 
   @JsonKey(name: 'name')
@@ -43,6 +44,7 @@ class CurrentWeatherResponseBody {
   final String country;
   @JsonKey(fromJson: _weatherMainFromJson)
   final String weatherMain;
+  final int timezone;
 
   static double _tempFromJson(dynamic json) {
     return (json['main']['temp'] as num).toDouble();
