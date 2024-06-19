@@ -57,11 +57,12 @@ List<WeatherDetailsItemModel> getWeatherDetailsModelList(
     WeatherDetailsItemModel(
         icon: Icons.sunny_snowing,
         title: AppStrings.sunrise.tr(),
-        subtitle: '${unixToTime(currentWeather.sunrise)} ${AppStrings.am.tr()}',
+        subtitle:
+            '${unixToTime(currentWeather.sunrise, currentWeather.timezone)} ${AppStrings.am.tr()}',
         barPercentage: getSunriseSunsetPercentage(
             currentWeather.sunrise, currentWeather.sunset),
         footerText:
-            '${AppStrings.sunset.tr()}: ${unixToTime(currentWeather.sunset)} ${AppStrings.pm.tr()}'),
+            '${AppStrings.sunset.tr()}: ${unixToTime(currentWeather.sunset, currentWeather.timezone)} ${AppStrings.pm.tr()}'),
     WeatherDetailsItemModel(
       icon: Icons.wind_power,
       title: AppStrings.wind.tr(),
